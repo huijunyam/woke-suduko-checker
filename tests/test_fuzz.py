@@ -1,7 +1,7 @@
 from woke.testing import *
 from woke.testing.fuzzing import *
 from pytypes.contracts.sudokuchecker import SudukoChecker
-from random import shuffle
+from random import shuffle, randint
 
 class SudukuCheckerTest(FuzzTest):
     checker: SudukoChecker
@@ -20,6 +20,13 @@ class SudukuCheckerTest(FuzzTest):
     def flow_check(self) -> None:   
         isValid = self.checker.check(self.board)
         assert isValid
+        # test invalid board by swaping element in valid board
+        row_pos, col_pos = randint(0, 8), randint(0, 8)
+        next_row_pos, next_col_pos = randint(0, 8), randint(0, 8)
+        if self.board[row_pos][col_pos] != self.board[next_row_pos][next_col_pos]:
+            self.board[row_pos][col_pos], self.board[next_row_pos][next_col_pos] = self.board[next_row_pos][next_col_pos], self.board[row_pos][col_pos]
+            isInvalid = self.checker.check(self.board)
+            assert not isInvalid
 
 @default_chain.connect()
 def test_Check():
