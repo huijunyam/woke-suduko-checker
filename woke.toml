@@ -1,0 +1,13 @@
+[compiler.solc]
+ignore_paths = ["node_modules", ".woke-build", "venv", "lib"]
+include_paths = ["node_modules"]
+
+[detectors]
+exclude = []
+ignore_paths = ["node_modules", ".woke-build", "venv", "lib"]
+
+[testing]
+cmd = "hardhat"
+
+[testing.hardhat]
+cmd_args = ""
